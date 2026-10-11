@@ -1,0 +1,344 @@
+/*
+ * Tailwind sem preflight: o layout original não tem reset e depende dos
+ * defaults do navegador (box-sizing content-box, margens de UA etc.).
+ */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/* Hover também em dispositivos touch, igual ao original. */
+@custom-variant hover (&:hover);
+
+/* ── Design system HUB Marketing (design-export/_ds/.../tokens) ── */
+:root {
+  /* Brand — primary: o navy é a cor de campo e a tinta; magenta e ouro são acentos. */
+  --navy: #272B4C;
+  --navy-deep: #20233F;
+  --navy-hover: #33375A;
+  --navy-press: #1B1E37;
+  --magenta: #CC1074;
+  --gold: #D9A84E;
+
+  /* Brand — variations */
+  --magenta-light: #E85FA8;
+  --magenta-soft: #F49CC4;
+  --plum: #5C2A66;
+  --plum-deep: #3A2159;
+  --magenta-deep: #8A1C68;
+  --magenta-banner: #B3196E;
+
+  --gold-ink: #C9973A;
+  --gold-light: #E8B36A;
+  --gold-bright: #F2C879;
+
+  /* Gradiente da marca: navy → ameixa → magenta profundo → magenta. */
+  --grad-brand: linear-gradient(125deg, #20233F, #3A2159, #8A1C68, #B3196E);
+
+  /* Neutrals */
+  --paper: #FFFFFF;
+  --gray-050: #F4F3F6;
+  --gray-100: #E9E7EE;
+  --gray-200: #D5D2DE;
+  --gray-400: #9B96AC;
+  --gray-600: #615C74;
+
+  /* Semantic aliases */
+  --bg-page: var(--paper);
+  --bg-subtle: var(--gray-050);
+  --surface-card: var(--paper);
+  --surface-dark: var(--navy-deep);
+  --surface-inset: var(--gray-100);
+
+  --text-strong: var(--navy);
+  --text-body: #33374F;
+  --text-muted: var(--gray-600);
+  --text-on-dark: #FFFFFF;
+  --text-on-dark-muted: rgba(255,255,255,0.8);
+  --text-link: var(--magenta);
+
+  --accent-primary: var(--magenta);
+  --accent-primary-hover: #B3196E;
+  --accent-primary-press: #8A1C68;
+  --accent-secondary: var(--gold);
+  --accent-secondary-ink: var(--gold-ink);
+
+  --border-subtle: var(--gray-100);
+  --border-default: var(--gray-200);
+  --border-strong: var(--gray-400);
+  --focus-ring: rgba(204,16,116,0.32);
+
+  /* Status */
+  --success: #2E9E6B;
+  --warning: var(--gold-ink);
+  --danger: #D23B57;
+
+  /* Weights */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* Type scale (px) */
+  --fs-display-xl: 76px;
+  --fs-display-lg: 56px;
+  --fs-display-md: 40px;
+  --fs-h1: 34px;
+  --fs-h2: 26px;
+  --fs-h3: 20px;
+  --fs-body-lg: 18px;
+  --fs-body: 16px;
+  --fs-body-sm: 14px;
+  --fs-caption: 12px;
+  --fs-overline: 11px;
+
+  /* Line heights */
+  --lh-tight: 1.05;
+  --lh-snug: 1.2;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.65;
+
+  /* Letter spacing */
+  --ls-tight: -0.02em;
+  --ls-normal: 0;
+  --ls-wide: 0.02em;
+  --ls-overline: 0.14em;
+
+  /* Spacing (4px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+
+  --container-max: 1200px;
+  --container-narrow: 760px;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(32,35,63,0.06);
+  --shadow-sm: 0 2px 8px rgba(32,35,63,0.08);
+  --shadow-md: 0 8px 24px rgba(32,35,63,0.10);
+  --shadow-lg: 0 18px 48px rgba(32,35,63,0.14);
+  --shadow-magenta: 0 12px 30px rgba(204,16,116,0.28);
+
+  /* Motion */
+  --ease-standard: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 320ms;
+}
+
+/* ── Tokens Tailwind: valores exatos usados na landing ── */
+@theme {
+  --font-sans: var(--font-poppins), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+
+  --color-ink: #20233F;
+  --color-ink-2: #3E4160;
+  --color-body: #4A4D68;
+  --color-muted: #5E6178;
+  --color-line: #E9E7EE;
+  --color-line-strong: #D5D3DD;
+  --color-track: #E2E0E8;
+  --color-surface: #F4F3F6;
+  --color-magenta: #CC1074;
+  --color-magenta-hover: #A80D5F;
+  --color-gold: #D9A84E;
+  --color-gold-hl: #E8BE6E;
+  --color-gold-bright: #F2C879;
+  --color-gold-ink: #C9973A;
+  --color-plum-deep: #3A2159;
+  --color-magenta-deep: #8A1C68;
+  --color-magenta-light: #E85FA8;
+  --color-navy: #20233F;
+  --color-navy-hover: #33375A;
+  --color-navy-press: #1B1E37;
+
+  --ease-hub: cubic-bezier(.2,.8,.2,1);
+
+  --animate-hub-marquee: hub-marquee 120s linear infinite;
+
+  @keyframes hub-b1 { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(18vw,8vh) scale(1.15); } 66% { transform: translate(-6vw,16vh) scale(0.9); } }
+  @keyframes hub-b2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-22vw,-10vh) scale(1.2); } }
+  @keyframes hub-b3 { 0%,100% { transform: translate(0,0) scale(1); } 40% { transform: translate(-10vw,12vh) scale(1.25); } 75% { transform: translate(8vw,-6vh) scale(0.85); } }
+  @keyframes hub-b4 { 0%,100% { transform: translate(0,0) rotate(0deg); } 50% { transform: translate(12vw,-14vh) rotate(40deg); } }
+  /* Brilho do hero claro: deriva lenta medida no próprio blob, para não invadir a manchete. */
+  @keyframes hub-g1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-12%,-8%) scale(1.12); } }
+  @keyframes hub-g2 { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(10%,12%) scale(0.92); } 66% { transform: translate(-8%,6%) scale(1.08); } }
+  @keyframes hub-g3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(16%,-10%) scale(1.15); } }
+  @keyframes hub-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes hub-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+}
+
+/* ── Regras globais da página (helmet do export original) ── */
+@layer base {
+  html { scroll-behavior: smooth; color-scheme: light; accent-color: #CC1074; scrollbar-color: #20233F #F4F3F6; }
+  body { margin: 0; background: #fff; color: #20233F; font-family: var(--font-sans); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+  a { color: #CC1074; text-decoration: none; }
+  a:hover { color: #A80D5F; text-decoration: underline; text-underline-offset: 0.2em; }
+  ::selection { background: rgba(204,16,116,0.18); color: #20233F; }
+  /*
+   * O tracking negativo das manchetes também aperta o espaço entre palavras, e o
+   * terminal da Fraunces itálica (o "l" de "digital") quase encosta na palavra seguinte.
+   * Devolve ao espaço o que o tracking tirou.
+   */
+  .font-display { word-spacing: 0.04em; }
+  /*
+   * Anel de foco em outline: segue o raio do próprio elemento e não é
+   * sobrescrito pelas sombras utilitárias (box-shadow) de botões e cards.
+   */
+  :focus-visible { outline: 2px solid #CC1074; outline-offset: 3px; }
+  [data-surface="dark"] :focus-visible { outline-color: #fff; }
+  [data-surface="dark"] ::selection { background: rgba(232,190,110,0.35); color: #fff; }
+}
+
+/*
+ * ── Entradas ──
+ * Tese: tudo chega "entrando em foco" (desfoque → nítido), e a frase-destaque
+ * de cada manchete chega um compasso depois, como a pausa de quem fala.
+ * As animações usam fill-mode `backwards`: depois que terminam, o elemento volta
+ * ao próprio estilo, sem brigar com o lift de hover dos cards.
+ */
+@keyframes hub-focus {
+  from { opacity: 0; transform: translateY(18px); filter: blur(8px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+/* Frase-destaque (inline): só foco e opacidade, sem deslocamento. */
+@keyframes hub-beat {
+  from { opacity: 0; filter: blur(6px); }
+  to { opacity: 1; filter: none; }
+}
+/* Linha da manchete subindo por uma máscara fixa na própria base (translate = recorte). */
+@keyframes hub-rise {
+  from { transform: translateY(100%); clip-path: inset(-0.3em -0.3em 100% -0.3em); }
+  to { transform: none; clip-path: inset(-0.3em -0.3em -0.3em -0.3em); }
+}
+@keyframes hub-bloom {
+  from { opacity: 0; transform: scale(0.88); }
+  to { opacity: 1; transform: none; }
+}
+/* Faixa do marquee: o gradiente sobe da base e fecha o hero. */
+@keyframes hub-wipe-up {
+  from { clip-path: inset(100% 0 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+@keyframes hub-drop {
+  from { opacity: 0; transform: translateY(-100%); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Abertura (hero e header): roda no carregamento, só em CSS. */
+.hub-line { animation: hub-rise 1100ms var(--ease-out) var(--load-delay, 0ms) backwards; }
+.hub-load { animation: hub-focus 1000ms var(--ease-out) var(--load-delay, 0ms) backwards; }
+.hub-bloom { animation: hub-bloom 2200ms var(--ease-out) var(--load-delay, 0ms) backwards; }
+.hub-wipe-up { animation: hub-wipe-up 900ms var(--ease-out) var(--load-delay, 0ms) backwards; }
+.hub-drop { animation: hub-drop 700ms var(--ease-out) backwards; }
+
+/*
+ * Rolagem: `data-reveal` marca o elemento, e components/RevealOnScroll.tsx põe
+ * `data-revealed` quando ele entra na tela (com --reveal-delay em stagger por lote).
+ * Só esconde com html[data-motion], ligado pelo script do <head>; sem JS, ou com
+ * movimento reduzido, tudo fica visível. `data-reveal="narrow"` só anima até 860px.
+ */
+html[data-motion] [data-reveal]:not([data-reveal="narrow"]):not([data-revealed]) { opacity: 0; }
+html[data-motion] [data-reveal]:not([data-reveal="narrow"])[data-revealed] {
+  animation: hub-focus 1000ms var(--ease-out) var(--reveal-delay, 0ms) backwards;
+}
+@media (max-width: 860px) {
+  html[data-motion] [data-reveal="narrow"]:not([data-revealed]) { opacity: 0; }
+  html[data-motion] [data-reveal="narrow"][data-revealed] {
+    animation: hub-focus 1000ms var(--ease-out) var(--reveal-delay, 0ms) backwards;
+  }
+}
+html[data-motion] [data-revealed] [data-beat] {
+  animation: hub-beat 1100ms var(--ease-out) calc(var(--reveal-delay, 0ms) + 480ms) backwards;
+}
+@media print {
+  html[data-motion] [data-reveal] { opacity: 1 !important; animation: none !important; }
+}
+
+/*
+ * ── Órbita do hero (components/sections/HeroOrbit.tsx) ──
+ * As entradas são motion; as voltas ficam aqui para parar fora da tela
+ * (data-paused) e com movimento reduzido (regra global no fim do arquivo).
+ */
+@keyframes hub-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes hub-spin { to { transform: rotate(360deg); } }
+/* Pulso: um traço curto (pathLength = 1) corre do canal até o nó e some. */
+@keyframes hub-signal {
+  0% { stroke-dashoffset: 0.08; opacity: 0; }
+  8% { opacity: 1; }
+  50% { opacity: 1; }
+  58%, 100% { stroke-dashoffset: -1; opacity: 0; }
+}
+.hub-signal { opacity: 0; animation: hub-signal 3.6s cubic-bezier(0.45, 0, 0.55, 1) infinite backwards; }
+.hub-orbit-spin { transform-box: fill-box; transform-origin: center; animation: hub-spin 160s linear infinite; }
+[data-orbit][data-paused] * { animation-play-state: paused !important; }
+
+/*
+ * ── Cenas dos canais (Jeito HUB) ──
+ * Mockups fiéis a cada plataforma: dentro da moldura valem a tipografia e o
+ * movimento de Google, LinkedIn e Instagram, não os da HUB.
+ */
+.mock-google { font-family: Arial, Roboto, "Helvetica Neue", sans-serif; }
+.mock-app { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+/* Tela dos canais em notebook baixo: o título fica, a descrição sai para os mockups caberem. */
+@media (min-width: 1024px) and (max-height: 820px) {
+  .channel-desc { display: none; }
+}
+@keyframes hub-caret { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
+@keyframes hub-g-load {
+  0% { transform: scaleX(0); opacity: 1; }
+  75% { transform: scaleX(0.9); opacity: 1; }
+  100% { transform: scaleX(1); opacity: 0; }
+}
+@keyframes hub-ripple { from { transform: scale(0); opacity: 1; } to { transform: scale(1); opacity: 0; } }
+@keyframes hub-li-pop {
+  0% { transform: translateY(10px) scale(0.4); opacity: 0; }
+  60% { transform: translateY(-2px) scale(1.12); opacity: 1; }
+  100% { transform: none; opacity: 1; }
+}
+@keyframes hub-li-bump {
+  0% { transform: scale(0.6); }
+  55% { transform: scale(1.28) rotate(-10deg); }
+  100% { transform: none; }
+}
+@keyframes hub-roll-in { from { transform: translateY(100%); } to { transform: none; } }
+
+/*
+ * ── Colunas de depoimentos (components/ui/testimonials-columns-1.tsx) ──
+ * A lista vem duplicada e sobe 50% em loop. Para no hover (WCAG 2.2.2: conteúdo
+ * que se move sozinho por mais de 5s precisa de pausa); com movimento reduzido,
+ * a regra global abaixo para a animação e a cópia some.
+ */
+@keyframes hub-scroll-up { to { transform: translateY(-50%); } }
+.hub-columns:hover .hub-column-track { animation-play-state: paused; }
+
+/*
+ * ── Galeria de sites (components/sections/SitesGallery.tsx) ──
+ * O site em foco entra subindo 16px; o fundo navy chega em fade.
+ */
+@keyframes hub-viewer-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes hub-fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* Movimento reduzido: tudo para; o autoplay dos carrosséis é desligado em JS (lib/motion.ts). */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  /* Sem a rolagem animada, o print do site fica parado no topo em vez de pular para o fim. */
+  .hub-site-scroll { transform: none !important; }
+}

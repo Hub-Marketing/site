@@ -1,0 +1,33 @@
+{
+  "hook": {
+    "enabled": true,
+    "limits": {
+      "maxFindings": 5,
+      "maxChars": 8000
+    }
+  },
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font",
+        "value": "arial",
+        "createdAt": "2026-10-10T22:23:20.526Z",
+        "reason": "Intentional: platform-native fonts inside Google/LinkedIn/Instagram mockups (.mock-google/.mock-app), user asked for visuals close to each real platform"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "roboto",
+        "createdAt": "2026-10-10T22:23:20.855Z",
+        "reason": "Intentional: platform-native fonts inside Google/LinkedIn/Instagram mockups (.mock-google/.mock-app), user asked for visuals close to each real platform"
+      },
+      {
+        "rule": "overused-font",
+        "value": "arial",
+        "createdAt": "2026-10-10T22:27:58.915Z",
+        "reason": "Intentional: platform-native font inside the Google SERP mockup (.mock-google), user asked for visuals close to each real platform"
+      }
+    ]
+  }
+}

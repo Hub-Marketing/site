@@ -1,0 +1,62 @@
+/* Hub Marketing — Color tokens */
+:root {
+  /* Brand — primary */
+  --navy: #272B4C;          /* ink / dark surfaces */
+  --navy-deep: #20233F;     /* gradient origin */
+  --magenta: #CC1074;       /* primary accent */
+  --gold: #D9A84E;          /* secondary accent */
+
+  /* Brand — variations */
+  --magenta-light: #E85FA8;
+  --magenta-soft: #F49CC4;
+  --plum: #5C2A66;          /* gradient mid */
+  --plum-deep: #3A2159;
+  --magenta-deep: #8A1C68;
+  --magenta-banner: #B3196E;
+
+  --gold-ink: #C9973A;      /* AA on light surfaces */
+  --gold-light: #E8B36A;
+  --gold-bright: #F2C879;
+
+  /* Neutrals */
+  --paper: #FFFFFF;
+  --gray-050: #F4F3F6;
+  --gray-100: #E9E7EE;
+  --gray-200: #D5D2DE;
+  --gray-400: #9B96AC;
+  --gray-600: #615C74;
+
+  /* Signature gradients */
+  --grad-brand: linear-gradient(125deg, #20233F, #3A2159, #8A1C68, #B3196E); /* @kind other */
+  --grad-banner: linear-gradient(100deg, #272B4C, #5C2A66, #CC1074); /* @kind other */
+
+  /* Semantic aliases */
+  --bg-page: var(--paper);
+  --bg-subtle: var(--gray-050);
+  --surface-card: var(--paper);
+  --surface-dark: var(--navy);
+  --surface-inset: var(--gray-100);
+
+  --text-strong: var(--navy);
+  --text-body: #33374F;
+  --text-muted: var(--gray-600);
+  --text-on-dark: #FFFFFF;
+  --text-on-dark-muted: rgba(255,255,255,0.72);
+  --text-link: var(--magenta);
+
+  --accent-primary: var(--magenta);
+  --accent-primary-hover: #B3196E;
+  --accent-primary-press: #8A1C68;
+  --accent-secondary: var(--gold);
+  --accent-secondary-ink: var(--gold-ink);
+
+  --border-subtle: var(--gray-100);
+  --border-default: var(--gray-200);
+  --border-strong: var(--gray-400);
+  --focus-ring: rgba(204,16,116,0.32);
+
+  /* Status */
+  --success: #2E9E6B;
+  --warning: var(--gold-ink);
+  --danger: #D23B57;
+}
