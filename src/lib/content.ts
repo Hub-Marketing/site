@@ -170,7 +170,8 @@ export const faq: { q: string; a: string; pending?: boolean }[] = [
 export const marqueeWords = ["Redes sociais", "Site", "Google Ads", "LinkedIn"];
 
 /**
- * Empresas que trabalham com a HUB, no marquee da base do hero (arquivos em public/uploads/clientes).
+ * Marcas com que a fundadora trabalhou antes da HUB (não são clientes da HUB, por isso a legenda
+ * fala em "experiência"), no marquee da base do hero (arquivos em public/uploads/clientes).
  * A faixa pinta todos de branco; `h` é a altura em px, ajustada para os logos terem o mesmo peso visual.
  * O logo da Cotemig é um só e já assina "Colégio e Faculdade".
  */
