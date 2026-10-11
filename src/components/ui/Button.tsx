@@ -20,9 +20,10 @@ const variants: Record<ButtonVariant, { base: string; states: string }> = {
     base: "bg-(--magenta) text-white border border-transparent shadow-(--shadow-magenta)",
     states: "hover:bg-(--accent-primary-hover) active:bg-(--accent-primary-press)",
   },
-  /* Gradiente da marca esticado: no hover a rampa desliza para o lado magenta. */
+  /* Gradiente da marca esticado: no hover a rampa desliza para o lado magenta. Origem na
+     borda e sem repetição: senão a borda transparente mostra o começo navy do próximo ladrilho. */
   secondary: {
-    base: "bg-(image:--grad-brand) bg-[length:130%_100%] bg-[position:0%_50%] text-white border border-transparent shadow-(--shadow-sm)",
+    base: "bg-(image:--grad-brand) bg-[length:130%_100%] bg-[position:0%_50%] bg-origin-border bg-no-repeat text-white border border-transparent shadow-(--shadow-sm)",
     states: "hover:bg-[position:100%_50%] active:bg-[position:70%_50%]",
   },
   gold: {

@@ -121,7 +121,7 @@ export function ServicosBoard() {
               data-svc-grad={dark ? "" : undefined}
               className={`h-full box-border rounded-[16px] p-[clamp(28px,3vw,40px)] min-[900px]:p-[44px] flex flex-col ${cardLift} ${
                 dark
-                  ? "bg-(image:--grad-brand) bg-size-[180%_180%] bg-[position:0%_50%] border border-transparent [box-shadow:0_16px_40px_rgba(32,35,63,0.18)]"
+                  ? "bg-(image:--grad-brand) bg-size-[180%_180%] bg-[position:0%_50%] bg-origin-border bg-no-repeat border border-transparent [box-shadow:0_16px_40px_rgba(32,35,63,0.18)]"
                   : "bg-white border border-line [box-shadow:0_4px_16px_rgba(32,35,63,0.06)]"
               }`}
             >
