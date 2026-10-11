@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Icon } from "@/components/ui/icons";
 import { faq } from "@/lib/content";
-import { body, displayTitle, h2Size } from "./styles";
+import { body, displayTitle, eyebrow, h2Size } from "./styles";
 
 export function Faq() {
   const [open, setOpen] = useState(0);
@@ -11,9 +11,12 @@ export function Faq() {
   return (
     <section id="faq" aria-labelledby="s5-title" className="bg-surface scroll-mt-[var(--header-h,69px)]">
       <div className="max-w-[1200px] mx-auto py-[clamp(64px,9vw,112px)] px-[clamp(16px,4vw,32px)] grid grid-cols-[repeat(auto-fit,minmax(min(100%,340px),1fr))] gap-[clamp(32px,5vw,72px)] items-start">
-        <h2 id="s5-title" data-reveal="" className={`${displayTitle} ${h2Size} text-ink`}>
-          Perguntas frequentes
-        </h2>
+        <div className="flex flex-col gap-[16px]">
+          <span data-reveal="" className={`${eyebrow} text-magenta`}>Dúvidas</span>
+          <h2 id="s5-title" data-reveal="" className={`${displayTitle} ${h2Size} text-ink`}>
+            Perguntas frequentes
+          </h2>
+        </div>
         <div className="flex flex-col border-t border-line [grid-column:span_1]">
           {faq.map((item, i) => {
             const on = open === i;

@@ -2,7 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { steps } from "@/lib/content";
+import { Icon } from "@/components/ui/icons";
 import { scrollToCenter } from "@/lib/scroll";
+import { ctaUrl } from "@/lib/site-config";
 import { bodyLg, displayTitle, eyebrow, h2Size } from "./styles";
 
 /*
@@ -103,7 +105,7 @@ export function ComoTrabalhamos() {
                 data-hub-step=""
                 // No desktop a própria rolagem já conduz os cards; a entrada vale só no celular.
                 data-reveal="narrow"
-                className="min-h-[62vh] flex items-center max-[860px]:min-h-0! max-[860px]:py-[10px]"
+                className="min-h-[44vh] flex items-center max-[860px]:min-h-0! max-[860px]:py-[10px]"
               >
                 <div
                   className={`w-full box-border border rounded-[16px] p-[clamp(32px,4vw,56px)] flex flex-col gap-[16px] [transition:opacity_900ms_var(--ease-hub)_150ms,transform_900ms_var(--ease-hub)_150ms] max-[860px]:opacity-100! max-[860px]:[transform:none]! ${
@@ -138,6 +140,19 @@ export function ComoTrabalhamos() {
                   >
                     {s.text}
                   </p>
+                  {/* A chegada da jornada aponta o primeiro passo dela. No gradiente, o destaque é ouro. */}
+                  {final && (
+                    <a
+                      href={ctaUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="self-start inline-flex items-center gap-[8px] min-h-[44px] mt-[8px] text-[16px] font-semibold text-gold-bright no-underline hover:text-gold-bright hover:underline underline-offset-[4px] decoration-[1.5px]"
+                    >
+                      <Icon name="whatsapp" size={18} />
+                      Quero meu diagnóstico gratuito
+                      <span className="sr-only"> (abre o WhatsApp em nova aba)</span>
+                    </a>
+                  )}
                 </div>
               </li>
             );

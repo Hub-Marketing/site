@@ -10,6 +10,7 @@ target_fingerprint: "sha256:77c5c46d126ce85c165ea5e5aea51875b455c2b36370aba8cba2
 target_path: "C:\\dev\\hub-marketing\\site\\v2\\src\\app\\page.tsx"
 timestamp: 2026-10-11T20-46-13Z
 slug: src-app-page-tsx
+closed: true
 ---
 Method: dual-agent (A: revisão de design · B: detector + navegador)
 

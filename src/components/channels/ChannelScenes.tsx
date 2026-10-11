@@ -31,7 +31,16 @@ const MOTION_QUERY = "(prefers-reduced-motion: no-preference)";
  * cada um um pouco mais que o anterior, e sobem mais rápido que a rolagem até assentarem juntos.
  */
 export function ChannelScenes({ enter, still }: { enter: MotionValue<number>; still: boolean }) {
-  const lag = (i: number) => (still ? 0 : 90 + i * 70);
+  // O atraso só vale nas três colunas: no trilho do celular, o card deslocado seria cortado pelo overflow.
+  const [wide, setWide] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const sync = () => setWide(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+  const lag = (i: number) => (still || !wide ? 0 : 90 + i * 70);
   const y0 = useTransform(enter, [0, 1], [lag(0), 0]);
   const y1 = useTransform(enter, [0, 1], [lag(1), 0]);
   const y2 = useTransform(enter, [0, 1], [lag(2), 0]);
@@ -47,6 +56,23 @@ export function ChannelScenes({ enter, still }: { enter: MotionValue<number>; st
   const visibleRef = useRef(visible);
   const elapsed = useRef(0);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
+  const railRef = useRef<HTMLDivElement>(null);
+
+  /**
+   * Abaixo de 1024px os cards ficam num trilho horizontal, um quadro por vez. No fim de
+   * uma cena, o trilho passa sozinho para o canal seguinte (o revezamento num quadro só).
+   * Devolve o índice para onde rolou, ou null quando o trilho não rola (desktop).
+   */
+  const advanceRail = useCallback((from: number) => {
+    const rail = railRef.current;
+    if (!rail || rail.scrollWidth <= rail.clientWidth + 1) return null;
+    const n = (from + 1) % N;
+    const card = cardRefs.current[n];
+    if (!card) return null;
+    const left = card.getBoundingClientRect().left - rail.getBoundingClientRect().left + rail.scrollLeft;
+    rail.scrollTo({ left: left - parseFloat(getComputedStyle(rail).paddingLeft), behavior: "smooth" });
+    return n;
+  }, []);
 
   const commit = useCallback((s: Stage) => {
     stageRef.current = s;
@@ -117,6 +143,12 @@ export function ChannelScenes({ enter, still }: { enter: MotionValue<number>; st
       if (elapsed.current < dur) {
         setT(elapsed.current);
       } else {
+        const railed = advanceRail(s.active);
+        if (railed !== null) {
+          // O relógio espera o próximo card entrar na tela (o observer libera o tique).
+          start(railed);
+          return;
+        }
         const n = pick(s.active);
         if (n === null) {
           commit({ ...s, playing: false });
@@ -128,10 +160,18 @@ export function ChannelScenes({ enter, still }: { enter: MotionValue<number>; st
     };
     raf = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(raf);
-  }, [ticking, stage.active, pick, start, commit]);
+  }, [ticking, stage.active, pick, start, commit, advanceRail]);
 
   return (
-    <div className="grid grid-cols-1 min-[1024px]:grid-cols-3 gap-x-[20px] gap-y-[48px] min-[1024px]:gap-y-[24px] justify-items-center">
+    /*
+     * Celular e tablet: trilho horizontal com encaixe, sangrando até as bordas da tela, com o
+     * próximo card aparecendo na borda. O respiro vertical (com margem negativa) dá espaço para
+     * a sombra dos mockups, que o overflow cortaria. Desktop: as três colunas em subgrid.
+     */
+    <div
+      ref={railRef}
+      className="flex gap-[16px] overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden mx-[calc(-1*clamp(16px,4vw,32px))] px-[clamp(16px,4vw,32px)] scroll-px-[clamp(16px,4vw,32px)] pt-[8px] pb-[56px] -mt-[8px] -mb-[56px] min-[1024px]:grid min-[1024px]:grid-cols-3 min-[1024px]:gap-x-[20px] min-[1024px]:gap-y-[24px] min-[1024px]:justify-items-center min-[1024px]:overflow-visible min-[1024px]:m-0 min-[1024px]:p-0"
+    >
       {pillars.map((p, i) => {
         const { Scene, dur } = SCENES[p.brand];
         const isActive = stage.playing && stage.active === i;
@@ -147,7 +187,7 @@ export function ChannelScenes({ enter, still }: { enter: MotionValue<number>; st
               cardRefs.current[i] = el;
             }}
             style={{ y: cardY[i] }}
-            className="w-full max-w-[calc(420px*var(--mock-zoom,1))] flex flex-col gap-[24px] min-[1024px]:grid min-[1024px]:grid-rows-subgrid min-[1024px]:row-span-4 min-[1024px]:gap-y-[10px]"
+            className="flex-none w-[min(86%,420px)] snap-start min-[1024px]:w-full max-w-[calc(420px*var(--mock-zoom,1))] flex flex-col gap-[24px] min-[1024px]:grid min-[1024px]:grid-rows-subgrid min-[1024px]:row-span-4 min-[1024px]:gap-y-[10px]"
           >
             {/*
               Texto acima do mockup; no desktop o subgrid tem uma linha para o título e outra para a descrição,

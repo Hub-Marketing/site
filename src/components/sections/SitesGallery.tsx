@@ -22,18 +22,25 @@ const slides = Array.from({ length: COPIES }, (_, c) => siteCases.map((s, i) => 
  * navegador. Com o mouse em cima, a página rola sozinha até o fim; o clique abre
  * o site em foco (SiteViewer), com rolagem livre e o WhatsApp a um toque.
  *
- * O trilho (Embla, em loop infinito) ocupa a largura toda da tela, de uma borda
- * à outra, desde a posição inicial.
+ * O trilho (Embla, em loop infinito) ocupa a largura toda da tela, mas o site em
+ * foco encaixa na borda da coluna do conteúdo, alinhado ao título da seção: o
+ * vizinho anterior aparece na margem como trilho que continua, e nada encosta no
+ * pixel 0 da tela.
  */
 export function SitesGallery() {
+  const rootRef = useRef<HTMLDivElement | null>(null);
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const [emblaRef, embla] = useEmblaCarousel(
     {
       loop: true,
       skipSnaps: true,
-      // Encaixe na borda esquerda da tela. O 100vw do viewport inclui a barra de rolagem
-      // e começa uns pixels fora da tela; a medida desconta isso (o Embla refaz no resize).
-      align: () => Math.max(0, -(viewportRef.current?.getBoundingClientRect().left ?? 0)),
+      // Distância da borda do viewport (que começa na borda da tela) até a borda da coluna.
+      // O Embla refaz o encaixe no resize.
+      align: () => {
+        const col = rootRef.current?.getBoundingClientRect().left ?? 0;
+        const view = viewportRef.current?.getBoundingClientRect().left ?? 0;
+        return Math.max(0, col - view);
+      },
     },
     [WheelGesturesPlugin({ forceWheelAxis: "x" })],
   );
@@ -59,7 +66,7 @@ export function SitesGallery() {
   const n = siteCases.length;
 
   return (
-    <div className="flex flex-col gap-[24px]">
+    <div ref={rootRef} className="flex flex-col gap-[24px]">
       <p className={`m-0 ${caption} text-muted flex items-center gap-[8px]`}>
         <Icon name="mouse" size={18} className="shrink-0 text-magenta [@media(hover:none)]:hidden" />
         <span className="[@media(hover:none)]:hidden">Passe o mouse sobre um site para ver a página inteira rolar. Arraste para o lado para ver os outros.</span>
@@ -262,7 +269,7 @@ function SiteViewer({ index, onChange }: { index: number | null; onChange: (i: n
           {/* Celular: barra de cima com nome e fechar. */}
           <div className="lg:hidden flex items-center gap-[12px] pl-[4px]">
             <div className="min-w-0 flex-1">
-              <p className="m-0 font-display italic font-semibold text-[22px] leading-[1.15] truncate">{site.client}</p>
+              <p className="m-0 font-display italic font-semibold text-[24px] leading-[1.15] truncate">{site.client}</p>
               <p className="m-0 text-[13px] leading-[1.4] text-[rgba(255,255,255,0.8)] truncate">
                 <span className="tabular-nums">{counter}</span> · {site.segment}
               </p>
@@ -320,6 +327,7 @@ function SiteViewer({ index, onChange }: { index: number | null; onChange: (i: n
             </button>
             <Button
               href={whatsappUrl(siteMessage(site))}
+                variant="gold"
               target="_blank"
               rel="noopener noreferrer"
               size="lg"
@@ -359,6 +367,7 @@ function SiteViewer({ index, onChange }: { index: number | null; onChange: (i: n
             <div className="flex flex-col gap-[10px]">
               <Button
                 href={whatsappUrl(siteMessage(site))}
+                variant="gold"
                 target="_blank"
                 rel="noopener noreferrer"
                 size="lg"
@@ -393,7 +402,7 @@ function SiteViewer({ index, onChange }: { index: number | null; onChange: (i: n
                           <Image src={s.image.src} alt="" width={s.image.width} height={s.image.height} sizes="72px" className="absolute left-0 top-0 w-full h-auto" />
                         </span>
                         <span className="min-w-0 flex flex-col">
-                          <span className="text-[15px] font-semibold leading-[1.3] text-white truncate">{s.client}</span>
+                          <span className="text-[16px] font-semibold leading-[1.3] text-white truncate">{s.client}</span>
                           <span className="text-[13px] leading-[1.4] text-[rgba(255,255,255,0.8)] truncate">{s.segment}</span>
                         </span>
                       </button>
