@@ -1,0 +1,40 @@
+name: 🚀 Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Um deploy por vez: um push novo cancela o que ainda está subindo.
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      # Com output: "export" no next.config.ts, o build gera o site estático em ./out/.
+      - run: npm run build
+
+      - name: Sync via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: ${{ secrets.HOSTGATOR_FTP_HOST }}
+          username: ${{ secrets.HOSTGATOR_FTP_USER }}
+          password: ${{ secrets.HOSTGATOR_FTP_PASS }}
+          # FTP sobre TLS, para a senha não trafegar em texto puro.
+          protocol: ftps
+          local-dir: ./out/
+          # Pasta servida pelo domínio. Se o usuário FTP já entra direto nela, crie a variável
+          # HOSTGATOR_FTP_DIR no repositório com o valor ./
+          server-dir: ${{ vars.HOSTGATOR_FTP_DIR || 'public_html/' }}
