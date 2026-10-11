@@ -50,8 +50,7 @@ O atendimento é online, para todo o Brasil, com sede em Belo Horizonte. A jorna
 - Prazos de resultado declarados:
   - Google Ads costuma gerar contatos no primeiro mês;
   - redes sociais e LinkedIn ganham força a partir do terceiro mês.
-- Em aberto:
-  - os links de redes sociais e contato no rodapé são `#`.
+- Contato público (`src/lib/content.ts`): e-mail `hubmarketingepublicidade@gmail.com`, Instagram `@hubmarketingagenciaa` e a página da empresa no LinkedIn (`agencia-hub-marketing`). O rodapé não mostra razão social nem CNPJ, por decisão da HUB.
 
 ## Brand Commitments
 

@@ -1,17 +1,7 @@
-import { TestimonialsColumn } from "@/components/ui/testimonials-columns-1";
 import { BrandLogo } from "@/components/ui/brand-logos";
 import { googleReviews, testimonials } from "@/lib/content";
+import { DepoimentosColunas } from "./DepoimentosColunas";
 import { displayTitle, eyebrow, h2Size, lead } from "./styles";
-
-/*
- * Com poucas avaliações, cada coluna leva todas, começando de um ponto diferente:
- * a rolagem em loop precisa de uma lista mais alta que a janela de 740px para não
- * abrir buraco, e no celular (uma coluna só) o visitante vê todas.
- */
-const rotate = (n: number) => [...testimonials.slice(n), ...testimonials.slice(0, n)];
-const firstColumn = testimonials;
-const secondColumn = rotate(2);
-const thirdColumn = rotate(4);
 
 export function Depoimentos() {
   return (
@@ -28,7 +18,7 @@ export function Depoimentos() {
             Quem trabalha com a HUB conta como foi.
           </h2>
           <p data-reveal="" className={`${lead} m-0 mt-5 text-[rgba(255,255,255,0.8)]`}>
-            O que nossos clientes dizem sobre o trabalho com a gente.
+            Avaliações do perfil da HUB no Google, com o texto como cada cliente escreveu.
           </p>
           <a
             data-reveal=""
@@ -48,14 +38,7 @@ export function Depoimentos() {
           </a>
         </div>
 
-        <div
-          data-reveal=""
-          className="hub-columns flex justify-center gap-6 mt-10 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[740px] overflow-hidden"
-        >
-          <TestimonialsColumn testimonials={firstColumn} duration={55} />
-          <TestimonialsColumn testimonials={secondColumn} className="hidden md:block" duration={64} decorative />
-          <TestimonialsColumn testimonials={thirdColumn} className="hidden lg:block" duration={59} decorative />
-        </div>
+        <DepoimentosColunas testimonials={testimonials} />
       </div>
     </section>
   );

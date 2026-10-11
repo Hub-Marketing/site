@@ -11,7 +11,7 @@ import { SitesGallery } from "./SitesGallery";
 import { body, caption, ctrlNext, ctrlPrev, displayTitle, eyebrow, h2Size, waLink } from "./styles";
 
 export function Cases() {
-  // "Site" abre primeiro: é a aba com trabalho real para ver.
+  // A primeira aba (LinkedIn) abre: o case com antes e depois responde ao título da seção.
   const [tab, setTab] = useState(0);
   const channel = channels[tab];
 
@@ -20,7 +20,7 @@ export function Cases() {
       <div className="max-w-[1200px] mx-auto py-[clamp(64px,9vw,112px)] px-[clamp(16px,4vw,32px)] flex flex-col gap-[clamp(32px,4vw,48px)]">
         <div className="flex flex-wrap items-end justify-between gap-x-[48px] gap-y-[24px]">
           <div className="flex flex-col gap-[16px] max-w-[640px]">
-            <span data-reveal="" className={`${eyebrow} text-magenta`}>Cases de sucesso</span>
+            <span data-reveal="" className={`${eyebrow} text-magenta`}>Cases</span>
             <h2 id="s-cases-title" data-reveal="" className={`${displayTitle} ${h2Size} text-ink text-balance`}>
               O que muda quando cada canal cumpre sua função.
             </h2>
@@ -45,7 +45,7 @@ export function Cases() {
                   onClick={() => setTab(c)}
                   onKeyDown={(e) => onTablistKey(e, tab, channels.length, setTab)}
                   className={`border-0 cursor-pointer font-[inherit] text-[14px] font-semibold py-[10px] px-[18px] max-[520px]:px-[8px] rounded-[999px] [transition:background_200ms_var(--ease-hub),color_200ms,box-shadow_200ms] ${
-                    on ? "bg-white text-ink [box-shadow:0_4px_12px_rgba(32,35,63,0.10)]" : "bg-transparent text-body [box-shadow:none]"
+                    on ? "bg-ink text-white [box-shadow:0_4px_12px_rgba(32,35,63,0.18)]" : "bg-transparent text-body [box-shadow:none] hover:text-ink"
                   }`}
                 >
                   {label}

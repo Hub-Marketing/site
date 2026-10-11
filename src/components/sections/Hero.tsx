@@ -59,7 +59,7 @@ export function Hero() {
                 Quero meu diagnóstico gratuito
               </CtaButton>
               <p className={`m-0 ${caption} max-w-[440px] ${t.muted}`}>
-                Uma conversa online de 40 minutos para entender onde sua presença digital está perdendo negócios. Sem compromisso.
+                Uma conversa online de 40 minutos para entender onde sua presença digital está perdendo negócios. Sem compromisso. O botão abre o WhatsApp com a mensagem pronta.
               </p>
             </div>
           </div>
@@ -68,9 +68,16 @@ export function Hero() {
       </div>
       {siteConfig.showMarquee && (
         /* A faixa leva o gradiente da marca nos dois temas, então a tinta é sempre branca. */
-        <div className="relative z-1 w-full overflow-hidden py-[20px] bg-(image:--grad-brand) hub-wipe-up [--load-delay:1000ms]">
-          <p className="sr-only">Empresas que trabalham com a HUB: {clientLogos.map((c) => c.name).join(", ")}.</p>
-          <div aria-hidden="true">
+        /*
+         * A legenda fica parada, alinhada à coluna do conteúdo, e os logos passam por trás dela
+         * entrando num degradê: sem legenda, logo branco rolando lê como enfeite, não como cliente.
+         */
+        <div className="relative z-1 w-full overflow-hidden py-[20px] bg-(image:--grad-brand) hub-wipe-up [--load-delay:1000ms] flex items-center gap-[24px] max-md:flex-col max-md:gap-[12px] max-md:pt-[16px]">
+          <p className="m-0 flex-none text-[12px] leading-[1.4] font-semibold tracking-[0.14em] uppercase text-white max-w-[190px] text-balance pl-[max(clamp(16px,4vw,32px),calc(50%-600px+clamp(16px,4vw,32px)))] max-md:max-w-none max-md:px-[16px] max-md:text-center">
+            Empresas que trabalham com a HUB
+            <span className="sr-only">: {clientLogos.map((c) => c.name).join(", ")}.</span>
+          </p>
+          <div aria-hidden="true" className="min-w-0 flex-1 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_72px)] max-md:w-full max-md:[mask-image:none]">
             <Marquee items={clientLogos.map((c) => <MarqueeLogo key={c.name} src={c.src} h={c.h} />)} />
           </div>
         </div>

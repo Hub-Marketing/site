@@ -321,12 +321,16 @@ html[data-motion] [data-revealed] [data-beat] {
 
 /*
  * ── Colunas de depoimentos (components/ui/testimonials-columns-1.tsx) ──
- * A lista vem duplicada e sobe 50% em loop. Para no hover (WCAG 2.2.2: conteúdo
- * que se move sozinho por mais de 5s precisa de pausa); com movimento reduzido,
- * a regra global abaixo para a animação e a cópia some.
+ * A lista vem duplicada e sobe 50% em loop. Para no hover, no foco do teclado e no
+ * toque, que alterna (data-paused, components/sections/DepoimentosColunas.tsx). WCAG
+ * 2.2.2: conteúdo que se move sozinho por mais de 5s precisa de pausa. Com movimento
+ * reduzido, a regra global abaixo para a animação e a cópia some.
  */
 @keyframes hub-scroll-up { to { transform: translateY(-50%); } }
-.hub-columns:hover .hub-column-track { animation-play-state: paused; }
+/* O hover pausa só em cima de um card; no vão entre as colunas, a rolagem segue. */
+.hub-columns-window:has(.hub-column-track li:hover) .hub-column-track,
+.hub-columns-window:focus-visible .hub-column-track,
+.hub-columns[data-paused] .hub-column-track { animation-play-state: paused; }
 
 /*
  * ── Galeria de sites (components/sections/SitesGallery.tsx) ──

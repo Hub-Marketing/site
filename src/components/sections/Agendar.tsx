@@ -22,8 +22,8 @@ export function Agendar() {
           <CtaButton variant={siteConfig.finalButton} size="lg">
             Agendar meu diagnóstico
           </CtaButton>
-          <p className={`m-0 ${caption} text-[rgba(255,255,255,0.8)] max-w-[480px] text-pretty`}>
-            Sem compromisso. O agendamento é pelo WhatsApp, e o diagnóstico é seu mesmo que você não feche com a HUB.
+          <p className={`m-0 ${caption} text-[rgba(255,255,255,0.8)] max-w-[520px] text-balance`}>
+            Sem compromisso. O botão abre o WhatsApp com a mensagem pronta, e o diagnóstico é seu mesmo que você não feche com a HUB.
           </p>
         </div>
       </div>

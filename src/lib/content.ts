@@ -28,8 +28,11 @@ export const steps: { label: string; title: string; text: string }[] = [
   { label: "Resultado na mesa", title: "Resultado na mesa.", text: "Uma reunião mensal com números claros: alcance, contatos, custo por contato e o que vamos mudar no mês seguinte." },
 ];
 
-/** Abas dos cases. "Site" vira galeria; as outras são carrossel. Google Ads volta quando houver case. */
-export const channels = ["Site", "LinkedIn", "Redes sociais"] as const;
+/**
+ * Abas dos cases. "Site" vira galeria; as outras são carrossel. Google Ads volta quando houver case.
+ * O LinkedIn abre primeiro: é o case B2B com antes e depois, o que o título da seção promete.
+ */
+export const channels = ["LinkedIn", "Redes sociais", "Site"] as const;
 export type Channel = (typeof channels)[number];
 
 export type CaseItem = {
@@ -58,15 +61,15 @@ export const cases: CaseItem[] = [
     client: "OrdecarGO",
     segment: "Terceirização logística · Belo Horizonte e região",
     challenge:
-      "O perfil do Jonathan, dono da empresa, estava parado: cerca de 13 impressões em 90 dias. E a página da OrdecarGO quase não aparecia para quem decide sobre a operação de um CD.",
+      "O Jonathan é dono da OrdecarGO, e o perfil pessoal dele no LinkedIn estava parado: tinha aparecido cerca de 13 vezes em 90 dias. A página da empresa quase não aparecia para quem decide sobre a operação de um CD.",
     solution:
-      "Diagnóstico, personas e posicionamento antes do primeiro post. Depois, o perfil do Jonathan virou o motor que abre portas e a página, a prova de que a empresa é séria. Tudo orgânico, sem anúncio.",
+      "Diagnóstico, personas e posicionamento antes do primeiro post. Depois, o perfil pessoal do Jonathan virou o motor que abre portas e a página, a prova de que a empresa é séria. Tudo orgânico, sem anúncio.",
     metrics: [
-      { v: "1.123", l: "impressões no perfil em 90 dias (antes, cerca de 13)" },
-      { v: "8x", l: "impressões da página de julho a setembro" },
-      { v: "73%", l: "do alcance vem de fora da rede do Jonathan" },
+      { v: "1.123", l: "aparições do perfil em 90 dias (antes, cerca de 13)" },
+      { v: "8x", l: "mais aparições da página da empresa, de julho a setembro" },
+      { v: "73%", l: "das pessoas alcançadas não eram conexões dele" },
     ],
-    image: { src: "/uploads/cases/li-ordecargo.webp", alt: "Perfil de Jonathan Goncalves, da OrdecarGO, no LinkedIn" },
+    image: { src: "/uploads/cases/li-ordecargo.webp", alt: "Perfil pessoal de Jonathan Goncalves, dono da OrdecarGO, no LinkedIn" },
   },
   {
     id: "cristiane-costa",
@@ -78,7 +81,7 @@ export const cases: CaseItem[] = [
     solution:
       "Três meses de estratégia e conteúdo no Instagram. Hoje mais de 44% do público está em Contagem e BH, a maior parte mulheres de 35 a 54 anos: justamente quem lida com inventário e sucessão.",
     metrics: [
-      { v: "41x", l: "mais contas alcançadas por mês" },
+      { v: "41x", l: "mais pessoas alcançadas por mês" },
       { v: "18x", l: "mais visualizações por mês" },
       { v: "133", l: "interações por mês, partindo de zero" },
     ],
@@ -179,9 +182,16 @@ export const clientLogos: { name: string; src: string; h: number }[] = [
   { name: "ArcelorMittal", src: "/uploads/clientes/arcelormittal.svg", h: 40 },
 ];
 
+/** E-mail de contato, visível no rodapé como alternativa ao WhatsApp. Vazio = não aparece. */
+export const contactEmail = "hubmarketingepublicidade@gmail.com";
+
+/** Linha institucional do rodapé (a sede e o alcance vêm do FAQ e do PRODUCT.md). */
+export const companyLocation = "Belo Horizonte, MG · Atendimento online para todo o Brasil";
+
+/** Ícones do rodapé. Um `href` vazio ou "#" esconde o ícone: link que não leva a lugar nenhum não vai ao ar. */
 export const socialLinks: { label: string; icon: IconName; href: string }[] = [
   { label: "Falar com a HUB no WhatsApp", icon: "whatsapp", href: ctaUrl },
-  { label: "Enviar e-mail para a HUB", icon: "mail", href: "#" },
-  { label: "HUB no Instagram", icon: "instagram", href: "#" },
-  { label: "HUB no LinkedIn", icon: "linkedin", href: "#" },
+  { label: "Enviar e-mail para a HUB", icon: "mail", href: contactEmail ? `mailto:${contactEmail}` : "" },
+  { label: "HUB no Instagram", icon: "instagram", href: "https://www.instagram.com/hubmarketingagenciaa/" },
+  { label: "HUB no LinkedIn", icon: "linkedin", href: "https://www.linkedin.com/company/agencia-hub-marketing/" },
 ];

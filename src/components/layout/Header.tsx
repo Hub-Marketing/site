@@ -70,8 +70,8 @@ export function Header() {
             ))}
           </nav>
           {/* 44px de altura: alvo de toque confortável e a mesma altura da logo, então o header não cresce. */}
-          <CtaButton variant="secondary" size="sm" className="whitespace-nowrap box-border min-h-[44px]">
-            {/* Rótulo curto em telas estreitas para o header não quebrar em duas linhas. */}
+          <CtaButton variant="secondary" size="sm" className="whitespace-nowrap box-border min-h-[44px]" iconClassName="max-[419px]:hidden">
+            {/* Rótulo curto (e sem ícone) em telas estreitas para o header não quebrar em duas linhas. */}
             <span>
               Quero meu diagnóstico<span className="max-[419px]:hidden"> gratuito</span>
             </span>

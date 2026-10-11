@@ -25,14 +25,22 @@ export function Faq() {
                     aria-controls={`faq-p${i}`}
                     aria-expanded={on}
                     onClick={() => setOpen((o) => (o === i ? -1 : i))}
-                    className="w-full flex items-center justify-between gap-[16px] py-[22px] px-[4px] [background:none] border-0 cursor-pointer text-left font-[inherit] text-[18px] leading-[1.4] font-semibold text-ink [transition:color_120ms] hover:text-magenta"
+                    className="group w-full flex items-center justify-between gap-[16px] py-[22px] px-[4px] [background:none] border-0 cursor-pointer text-left font-[inherit] text-[18px] leading-[1.4] font-semibold text-ink [transition:color_120ms] hover:text-magenta"
                   >
                     {item.q}
-                    <Icon
-                      name="chevron-down"
-                      size={22}
-                      className={`flex-none text-ink [transition:transform_200ms] ${on ? "[transform:rotate(180deg)]" : "[transform:none]"}`}
-                    />
+                    {/* O item aberto ganha o círculo magenta cheio: o estado muda de forma, não só de cor. */}
+                    <span
+                      aria-hidden="true"
+                      className={`flex-none w-[36px] h-[36px] box-border rounded-[999px] border-[1.5px] flex items-center justify-center [transition:background_200ms_var(--ease-hub),border-color_120ms,color_120ms] ${
+                        on ? "bg-magenta border-magenta text-white" : "border-line-strong text-ink group-hover:border-magenta group-hover:text-magenta"
+                      }`}
+                    >
+                      <Icon
+                        name="chevron-down"
+                        size={20}
+                        className={`[transition:transform_200ms] ${on ? "[transform:rotate(180deg)]" : "[transform:none]"}`}
+                      />
+                    </span>
                   </button>
                 </h3>
                 <div

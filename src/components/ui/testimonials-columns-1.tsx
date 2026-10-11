@@ -14,7 +14,8 @@ export type Testimonial = {
 /**
  * Coluna de depoimentos em rolagem vertical contínua (21st.dev › testimonials-columns-1).
  * A lista é duplicada e sobe 50% em loop, em CSS (`hub-scroll-up`, globals.css), e
- * para no hover da seção. A cópia fica fora do leitor de tela e some com movimento reduzido.
+ * para com hover, foco ou o botão de pausa da seção. A cópia fica fora do leitor de tela
+ * e some com movimento reduzido. A largura do card vem de `--testimonial-w` (padrão 320px).
  */
 export const TestimonialsColumn = (props: {
   className?: string;
@@ -24,9 +25,10 @@ export const TestimonialsColumn = (props: {
   decorative?: boolean;
 }) => (
   <div className={props.className} aria-hidden={props.decorative || undefined}>
+    {/* Duração por variável, não `animation` inline: o shorthand inline zeraria o play-state das regras de pausa. */}
     <ul
-      className="hub-column-track m-0 p-0 list-none flex flex-col gap-6 pb-6"
-      style={{ animation: `hub-scroll-up ${props.duration || 10}s linear infinite` }}
+      className="hub-column-track m-0 p-0 list-none flex flex-col gap-6 pb-6 animate-[hub-scroll-up_var(--column-dur)_linear_infinite]"
+      style={{ "--column-dur": `${props.duration || 10}s` } as React.CSSProperties}
     >
       {[0, 1].map((index) => (
         <React.Fragment key={index}>
@@ -34,7 +36,7 @@ export const TestimonialsColumn = (props: {
             <li
               key={i}
               aria-hidden={index > 0 ? true : undefined}
-              className={`box-border p-8 rounded-[16px] border border-[rgba(255,255,255,0.14)] bg-[rgba(255,255,255,0.04)] max-w-xs w-full ${
+              className={`box-border p-8 rounded-[16px] border border-[rgba(255,255,255,0.14)] bg-[rgba(255,255,255,0.04)] max-w-[var(--testimonial-w,320px)] w-full ${
                 index > 0 ? "motion-reduce:hidden" : ""
               }`}
             >

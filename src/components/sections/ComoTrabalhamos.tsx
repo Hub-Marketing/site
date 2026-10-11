@@ -5,6 +5,13 @@ import { steps } from "@/lib/content";
 import { scrollToCenter } from "@/lib/scroll";
 import { bodyLg, displayTitle, eyebrow, h2Size } from "./styles";
 
+/*
+ * A rampa do gradiente da marca é a própria jornada: cada etapa assume uma
+ * parada, do navy (onde a empresa está) ao magenta, e a chegada fica no ouro.
+ */
+const ramp = ["var(--color-ink)", "var(--color-plum-deep)", "var(--color-magenta-deep)", "var(--color-magenta)"];
+const rampAt = (i: number) => ramp[Math.min(i, ramp.length - 1)];
+
 export function ComoTrabalhamos() {
   const [step, setStep] = useState(0);
   const stepEls = useRef<(HTMLLIElement | null)[]>([]);
@@ -42,10 +49,11 @@ export function ComoTrabalhamos() {
           </div>
           <div data-hub-steps-nav="" data-reveal="" className="relative max-[860px]:hidden!">
             <span aria-hidden="true" className="absolute left-[17px] top-[24px] bottom-[24px] w-[2px] bg-track rounded-[2px]"></span>
+            {/* A barra mostra a rampa até a etapa ativa: o recorte anda, as cores ficam no lugar de cada marcador. */}
             <span
               aria-hidden="true"
-              className="absolute left-[17px] top-[24px] w-[2px] bg-magenta rounded-[2px] [transition:height_450ms_var(--ease-hub)]"
-              style={{ height: `calc((100% - 48px) * ${step / last})` }}
+              className="absolute left-[17px] top-[24px] bottom-[24px] w-[2px] rounded-[2px] bg-[linear-gradient(to_bottom,var(--color-ink),var(--color-plum-deep)_25%,var(--color-magenta-deep)_50%,var(--color-magenta)_75%)] [transition:clip-path_450ms_var(--ease-hub)]"
+              style={{ clipPath: `inset(0 0 ${(1 - step / last) * 100}% 0)` }}
             ></span>
             <ol className="list-none m-0 p-0 flex flex-col gap-[12px]">
               {steps.map((s, i) => (
@@ -62,8 +70,17 @@ export function ComoTrabalhamos() {
                   >
                     <span
                       className={`relative z-1 w-[36px] h-[36px] flex-none rounded-[999px] flex items-center justify-center text-[13px] font-semibold border-[1.5px] [transition:background_300ms_ease-out,color_300ms_ease-out,border-color_300ms_ease-out] ${
-                        i <= step ? "border-magenta" : "border-line-strong"
-                      } ${i === step ? "bg-magenta text-white" : i < step ? "bg-white text-ink" : "bg-surface text-muted"}`}
+                        i > step ? "bg-surface text-muted border-line-strong" : ""
+                      }`}
+                      style={
+                        i === step
+                          ? i === last
+                            ? { background: "var(--color-gold)", borderColor: "var(--color-gold)", color: "var(--color-ink)" }
+                            : { background: rampAt(i), borderColor: rampAt(i), color: "#fff" }
+                          : i < step
+                            ? { background: "#fff", borderColor: rampAt(i), color: rampAt(i) }
+                            : undefined
+                      }
                     >
                       {i + 1}
                     </span>
@@ -103,8 +120,9 @@ export function ComoTrabalhamos() {
                 >
                   <span
                     className={`font-display italic font-semibold text-[clamp(72px,9vw,120px)] leading-[0.9] tracking-[-0.02em] ${
-                      final ? "text-gold-hl" : "text-ink"
+                      final ? "text-gold-hl" : ""
                     }`}
+                    style={final ? undefined : { color: rampAt(i) }}
                   >
                     {String(i + 1).padStart(2, "0")}
                   </span>

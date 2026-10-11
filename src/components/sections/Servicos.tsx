@@ -15,7 +15,7 @@ export function Servicos() {
         <ServicosBoard />
         <div data-reveal="" className="flex justify-center">
           <CtaButton variant="secondary" size="lg">
-            Quero entender o que faz sentido pra minha empresa
+            Quero meu diagnóstico gratuito
           </CtaButton>
         </div>
       </div>
